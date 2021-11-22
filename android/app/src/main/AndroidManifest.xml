@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.mateusluiz.calculadora_imc">
    <application
-        android:label="calculadora_imc"
+        android:label="Calculadora de IMC"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

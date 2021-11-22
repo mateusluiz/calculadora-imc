@@ -37,13 +37,14 @@ class _HomePageState extends State<HomePage> {
 
     setState(() {
       _infoText = "Informe seus dados!";
+      _formkey = GlobalKey<FormState>();
     });
   }
 
-  void calculate() {
+  void _calculate() {
     setState(() {
-      double weight = double.parse(weightController.text);
-      double height = double.parse(heightController.text) / 100;
+      double weight = double.parse(weightController.value.text);
+      double height = double.parse(heightController.value.text) / 100;
       double imc = weight / (height * height);
 
       if (imc < 18.6) {
@@ -106,8 +107,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                   controller: weightController,
                   validator: (value) {
-                    if (value == null) {
-                      _infoText = "Insira seu Peso!";
+                    if (value!.isEmpty) {
+                      return 'Insira seu Peso';
                     }
                   },
                 ),
@@ -128,7 +129,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   controller: heightController,
                   validator: (value) {
-                    if (value == null) {
+                    if (value!.isEmpty) {
                       return "Insira sua Altura!";
                     }
                   },
@@ -138,7 +139,11 @@ class _HomePageState extends State<HomePage> {
                   child: Container(
                     height: 50.0,
                     child: ElevatedButton(
-                      onPressed: calculate,
+                      onPressed: () {
+                        if (_formkey.currentState!.validate()) {
+                          _calculate();
+                        }
+                      },
                       child: const Text(
                         'Calcular',
                         style: TextStyle(
